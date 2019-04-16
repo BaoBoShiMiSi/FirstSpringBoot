@@ -1,0 +1,131 @@
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+</meta>
+
+<!--模板页面输出字符串-->
+输出的字符串1：get hello
+<p>输出的字符串2</p>
+
+<!-- 模板页面访问变量-->
+<p th:text="${value1}"></p>
+<p th:text="${value2}"></p>
+
+<!--*{ }选择表达式-->
+<div class="showing" th:object="${modelTest}">
+    <h2>*{ }方式显示属性</h2>
+    <p th:text="*{name}"></p>
+    <p th:text="*{age}"></p>
+    <p th:text="*{string}"></p>
+</div>
+
+<!--@{ }超链接url表达式 ,启动服务器后 th:src会代替src th:href会代替href-->
+<a href="index_2.html" th:href="@{/index}">跳转</a>
+<!--引入css文件-->
+<link rel="stylesheet" type="text/css" media="all" href="../webapp/static/css/style.css"
+      th:href="@{/static/css/style.css}"/>
+<!--引入js文件-->
+<script type="text/javascript" src="../webapp/static/js/thymeleaf.js" th:src="@{/static/js/thymeleaf.js}"></script>
+
+<!--controller中添加属性-->
+<p th:text="${htmlContent}">转义字符串htmlContent</p>
+<p th:utext="${htmlContent}">非转义字符串htmlContent</p>
+<!--获取对象-->
+<p th:text="${modelTest}"></p>
+<p th:text="${modelTest.getName()}"></p>
+<p th:text="${modelTest.getAge()}"></p>
+<p th:text="${modelTest.getString()}"></p>
+<!--算数运算-->
+<p th:text="${modelTest.getAge()+999}"></p>
+
+<!--themeleaf条件if
+不只是布尔值的 true 和 false, th:if 表达式返回其他值时也会被认为是 true 或 false，规则如下:
+boolean 类型并且值是 true, 返回 true
+数值类型并且值不是 0, 返回 true
+字符类型(Char)并且值不是 0, 返回 true
+String 类型并且值不是 "false", "off", "no", 返回 true
+不是 boolean, 数值, 字符, String 的其他类型, 返回 true
+值是 null, 返回 false
+    -->
+<p th:if="${testBoolean}">如果testBoolean 是 true ，本句话就会显示</p>
+<p th:if="${not testBoolean}">取反 ，所以如果testBoolean 是 true ，本句话就不会显示</p>
+<p th:text="${testBoolean}?'当testBoolean为真的时候，显示本句话，这是用三相表达式做的':''"></p>
+
+<!--themeleaf 遍历-->
+<table>
+    <thead>
+    <tr>
+        <th>id</th>
+        <th>age</th>
+        <th>string</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="t: ${testList}">
+        <td th:text="${t.name}"></td>
+        <td th:text="${t.age}"></td>
+        <td th:text="${t.string}"></td>
+    </tr>
+    </tbody>
+</table>
+<!--select与thymeleaf遍历集合-->
+<div class="showing">
+    <h2>遍历 select </h2>
+    <select size="3">
+        <option th:each="t:${testList}" th:value="${t.name}" th:selected="${t.name==modelTest.name}"
+                th:text="${t.name}"></option>
+    </select>
+</div>
+<!--遍历map-->
+<table>
+    <thead>
+    <tr>
+        <th>id</th>
+        <th>string</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="k: ${testMap}">
+        <td th:text="${k.key}"></td>
+        <td th:text="${k.value}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<!--thymeleaf内置工具-->
+<div class="showing date">
+    <h2>格式化日期</h2>
+    <p>直接输出日期 ${now}:</p>
+    <p th:text="${now}"></p>
+    <p>默认格式化 ${#dates.format(now)}:</p>
+    <!--<p th:text="${#dates.format(now)}"></p>-->
+    <p>自定义格式化 ${#dates.format(now,'yyyy-MM-dd HH:mm:ss')}:</p>
+    <!--<p th:text="${#dates.format(now,'yyyy-MM-dd HH:mm:ss')}"></p>-->
+</div>
+<!--其他工具
+Execution Info、Messages、URIs/URLs
+Conversions、Dates、Calendars
+Numbers、Strings、Objects、Booleans
+Arrays、Lists、Sets、Maps
+Aggregates、IDs
+-->
+
+<!--引用模板-->
+<body>
+<div th:include="index_2">直接引用</div>
+<div th:include="index_2::copy">引用名为copy的片段</div>
+<div th:text="(true ? 'x': 'y')">其他任何表达式</div>
+<div th:include="index_2:: #copy-section">使用id引用片段 without th:fragment</div>
+</body>
+
+<!--th:with 的作用是声明一个局部变量. 这个局部变量的作用域是 声明时的元素及其子元素.-->
+<div th:with="isEven = (50 % 2 == 0)"></div>
+<!-- 也可以包含在 {} 内, 那么 {} 内的整体就是一个 ognl/spel 表达式, 由 ognl/spel 引擎负责计算 -->
+<div th:with="isOdd = ${50 % 2 == 1}">
+    <span th:if="${isOdd}">是奇数</span>
+    <span th:if="!${isOdd}">是偶数</span>
+</div>
+
+<p th:text="{window.location}"></p>
+url = window.location;
+alert(url);
+</html>

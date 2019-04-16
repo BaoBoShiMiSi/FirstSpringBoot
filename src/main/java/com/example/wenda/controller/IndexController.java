@@ -13,8 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.*;
 
-@Controller
-public class contollerIndex {
+//@Controller
+public class IndexController {
 
     @RequestMapping(path = {"/", "/index"}, method = {RequestMethod.GET})
     @ResponseBody
