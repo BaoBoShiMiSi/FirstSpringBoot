@@ -16,7 +16,7 @@ public interface LoginTicketDAO {
     @Select({"select ", Select_Fields, " from ", Table_Name, " where ticket=#{ticket}"})
     LoginTicket selectByTicket(String ticket);
 
-    @Update({"update ", Table_Name, " status=#{status} ", " where ticket=#{ticket}"})
-    void UpdateTicketBy(@Param("ticket") String ticket,
-                        @Param("status") int status);
+    @Update({"update ", Table_Name, "set status=#{status} ", " where ticket=#{ticket}"})
+    void UpdateStatusByTicket(@Param("ticket") String ticket,
+                              @Param("status") int status);
 }

@@ -5,7 +5,6 @@ import com.example.wenda.dao.UserDAO;
 import com.example.wenda.modle.LoginTicket;
 import com.example.wenda.modle.User;
 import com.example.wenda.utils.WendaUtil;
-import groovyjarjarantlr.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -75,6 +74,12 @@ public class UserService {
         String ticket = addLoginticket(user.getId());
         map.put("ticket", ticket);
         return map;
+    }
+
+    //用户退出
+    public void logout(String ticket) {
+
+        loginTicketDAO.UpdateStatusByTicket(ticket, 1);
     }
 
     //添加ticket到数据库表的方法

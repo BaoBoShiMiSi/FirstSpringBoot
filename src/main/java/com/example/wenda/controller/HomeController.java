@@ -2,19 +2,16 @@ package com.example.wenda.controller;
 
 import com.example.wenda.aspect.LogAspect;
 import com.example.wenda.modle.Question;
-import com.example.wenda.modle.User;
 import com.example.wenda.modle.ViewObject;
 import com.example.wenda.sevice.QuestionService;
 import com.example.wenda.sevice.UserService;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
 import java.util.List;
